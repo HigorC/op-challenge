@@ -16,13 +16,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/beers")
+@RequestMapping("v1/beers")
 public class BeerController {
 
     @Autowired
@@ -30,7 +29,7 @@ public class BeerController {
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> findAllBeers(
-            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String query,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
@@ -38,10 +37,12 @@ public class BeerController {
         Pageable paging = PageRequest.of(page, size);
 
         Page<Beer> pageBeers;
-        if (name == null)
+
+        if (query != null) {
+            pageBeers = beerRepository.findByNameLikeIgnoreCaseOrDescriptionIsLikeIgnoreCase(query, query, paging);
+        } else {
             pageBeers = beerRepository.findAll(paging);
-        else
-            pageBeers = beerRepository.findByName(name, paging);
+        }
 
         beers = pageBeers.getContent();
 

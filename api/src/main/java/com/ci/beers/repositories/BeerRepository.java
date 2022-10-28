@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BeerRepository extends MongoRepository<Beer, Integer> {
 
-    Page<Beer> findByName(String name, Pageable pageable);
+    Page<Beer> findByNameLikeIgnoreCaseOrDescriptionIsLikeIgnoreCase(String name, String description, Pageable pageable);
+
 }
