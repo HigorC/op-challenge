@@ -1,10 +1,10 @@
-package com.ci.beerschallenge;
+package com.ci.beers;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BeersChallengeApplicationTests {
+class BeersApplicationTests {
 
 	@Test
 	void contextLoads() {
