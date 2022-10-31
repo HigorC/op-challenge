@@ -1,0 +1,46 @@
+<header>
+  <nav class="navbar bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand">Beers</a>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Name or description" name="query"
+          aria-label="Search" [(ngModel)]="query" (keydown.enter)="search()">
+        <button class="btn btn-outline-success" type="submit" (click)="search()">Search</button>
+      </form>
+    </div>
+  </nav>
+</header>
+
+<div class="row beers">
+  <div *ngFor="let beer of result?.beers" class="col-md-3 col-sm-4">
+    <beer class="col" [beer]="beer"></beer>
+  </div>
+</div>
+
+<footer class="row justify-content-md-center">
+  <div class="col"></div>
+  <div class="col">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item" *ngIf="result && result.currentPage > 0">
+          <a class="page-link" href="#" (click)="previousPage()" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+
+        <li *ngFor="let i of pages" class="page-item" [class.active]="i === result?.currentPage"><a class="page-link"
+            (click)="paginate(i)" href="#">{{i}}</a></li>
+
+        <li class="page-item" *ngIf="result && result.currentPage < result.totalPages -1">
+          <a class="page-link" href="#" (click)="nextPage()" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="col"></div>
+
+</footer>
