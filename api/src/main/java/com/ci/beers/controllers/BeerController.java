@@ -1,7 +1,7 @@
 package com.ci.beers.controllers;
 
 import com.ci.beers.entities.Beer;
-import com.ci.beers.repositories.BeerRepository;
+import com.ci.beers.services.BeerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +27,10 @@ import java.util.Map;
 public class BeerController {
 
     @Autowired
-    private BeerRepository beerRepository;
+    private BeerService beerService;
 
     @GetMapping
-    public ResponseEntity<Map<String, Object>> findAllBeers(
+    public ResponseEntity<Map<String, Object>> findBeers(
             @RequestParam(required = false) String query,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
@@ -38,13 +38,7 @@ public class BeerController {
         List<Beer> beers;
         Pageable paging = PageRequest.of(page, size);
 
-        Page<Beer> pageBeers;
-
-        if (query != null) {
-            pageBeers = beerRepository.findByNameLikeIgnoreCaseOrDescriptionIsLikeIgnoreCase(query, query, paging);
-        } else {
-            pageBeers = beerRepository.findAll(paging);
-        }
+        Page<Beer> pageBeers = beerService.findBeers(query, paging);
 
         beers = pageBeers.getContent();
 
@@ -56,10 +50,4 @@ public class BeerController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-    @PostMapping
-    public Beer saveUser(@Validated @RequestBody Beer beer) {
-        return beerRepository.save(beer);
-    }
-
 }
