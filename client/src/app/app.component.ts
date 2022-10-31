@@ -46,6 +46,8 @@ export class AppComponent implements OnInit {
     url = setParameter(url, 'page', String(this.page))
     url = setParameter(url, 'pageSize', String(this.pageSize))
 
+    this.page = 0
+
     this.http
       .get<APIResult>(url)
       .subscribe((data: APIResult) => {
