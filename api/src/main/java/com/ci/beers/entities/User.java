@@ -6,7 +6,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @Document(collection = "users")
@@ -15,9 +17,12 @@ public class User implements UserDetails {
     private String username;
     private String password;
 
+    private List<Beer> favouriteBeers;
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        this.favouriteBeers = new ArrayList<>();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.ci.beers.controllers;
 
 import com.ci.beers.entities.AuthRequest;
+import com.ci.beers.entities.Beer;
 import com.ci.beers.entities.User;
 import com.ci.beers.entities.UserCreatedResponse;
 import com.ci.beers.exceptions.UserAlreadyExists;
@@ -13,13 +14,18 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -54,5 +60,15 @@ public class UserController {
             throw new ResponseStatusException(
                     HttpStatus.METHOD_NOT_ALLOWED, err.getMessage(), err);
         }
+    }
+
+    @PostMapping("favbeers/{beerId}")
+    public User addFavouriteBeer(@AuthenticationPrincipal User user, @PathVariable String beerId) {
+        return userService.addNewFavouriteBeer(user, beerId);
+    }
+
+    @GetMapping("favbeers")
+    public List<Beer> getFavouriteBeers(@AuthenticationPrincipal User user) {
+        return userService.getFavouriteBeers(user);
     }
 }
