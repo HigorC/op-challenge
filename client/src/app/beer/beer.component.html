@@ -7,6 +7,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{beer.name}}</h5>
                 <p class="card-text">{{beer.description}}</p>
+                <button class="btn" [class.isFav]="fav" (click)="addOnFavourites(beer._id)">Fav</button>
             </div>
         </div>
     </div>

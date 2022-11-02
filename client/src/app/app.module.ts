@@ -7,6 +7,7 @@ import { BeerComponent } from './beer/beer.component';
 import { FormsModule } from '@angular/forms';
 import { ListPageComponent } from './list-page/list-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { FavBeersPageComponent } from './fav-beers-page/fav-beers-page.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
     BeerComponent,
     ListPageComponent,
     LoginPageComponent,
+    FavBeersPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,6 +24,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
     RouterModule.forRoot([
       {path: 'home', component: ListPageComponent},
       {path: 'login', component: LoginPageComponent},
+      {path: 'favbeers', component: FavBeersPageComponent},
     ]),
   ],
   providers: [],

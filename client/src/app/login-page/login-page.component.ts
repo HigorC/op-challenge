@@ -24,6 +24,8 @@ export class LoginPageComponent implements OnInit {
 
       .subscribe((data) => {
         if (data && data.token) {
+          console.log(`Logged! Token saved on localStorage: ${data.token}`);
+          
           localStorage.setItem('token', data.token);
           this.router.navigate(['/home'])
         }
@@ -31,6 +33,13 @@ export class LoginPageComponent implements OnInit {
   }
 
   create() {
+    let url = `${this.baseAPIUrl}`
+    this.http
+      .post<any>(`${url}/users/create`, { "username": this.username, "password": this.password })
+
+      .subscribe((data) => {
+        console.log(data);
+      })
   }
 
 }
