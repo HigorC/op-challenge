@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { APIResult } from '../interfaces/APIResult.interface';
 import { setParameter } from '../utils/url';
+import { Beer } from '../beer/beer.entity';
 
 @Component({
   selector: 'app-list-page',
@@ -14,7 +15,7 @@ export class ListPageComponent implements OnInit {
   pageSize: Number = 10;
   query: string = '';
   pages: Array<Number> = []
-
+  favBeers: Array<String> = [];
   result: APIResult | undefined;
 
   constructor(private http: HttpClient) {
@@ -86,7 +87,25 @@ export class ListPageComponent implements OnInit {
     }
   }
 
+  getFavouriteBeers() {
+    let url = `${this.baseAPIUrl}/users/favbeers`
+
+    const token = localStorage.getItem('token');
+
+    this.http
+      .get<any>(url, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      .subscribe((data) => {
+        this.favBeers = data.map((beer: Beer) => beer._id)
+        console.log(data);
+      })
+  }
+
   async ngOnInit() {
     this.search()
+    this.getFavouriteBeers()
   }
 }

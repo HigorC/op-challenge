@@ -12,7 +12,7 @@
 
 <div class="row beers">
     <div *ngFor="let beer of result?.beers" class="col-md-3 col-sm-4">
-        <beer class="col" [beer]="beer"></beer>
+        <beer class="col" [beer]="beer" [fav]="favBeers.includes(beer._id)"></beer>
     </div>
 </div>
 

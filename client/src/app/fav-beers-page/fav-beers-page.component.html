@@ -1,0 +1,7 @@
+<h2>Your favourite beers:</h2>
+
+<div class="row beers">
+    <div *ngFor="let beer of beers" class="col-md-3 col-sm-4">
+        <beer class="col" [beer]="beer"></beer>
+    </div>
+</div>
